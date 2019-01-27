@@ -1,0 +1,14 @@
+0. image net urls : 下载负面样本
+http://image-net.org/download-imageurls
+#http://www.image-net.org/api/text/imagenet.synset.geturls?wnid=n04194289
+
+1. create samples into info folder  创建正面样本
+opencv_createsamples.exe -img watch5050.jpg -bg bg.txt -info info/info.lst -pngoutput info -maxxangle 0.5 -maxyangle 0.5 -maxzangle 0.5 -num 1950
+
+2. create vector based on positive samples 创建向量
+opencv_createsamples -info info/info.lst -num 1950 -w 20 -h 20 -vec positives.vec
+
+3. create data folder 训练模型
+opencv_traincascade -data data -vec positives.vec -bg bg.txt -numPos 1800 -numNeg 900 -numStages 10 -w 20 -h 20
+
+4. 使用模型
